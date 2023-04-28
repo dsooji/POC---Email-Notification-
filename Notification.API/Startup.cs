@@ -32,6 +32,8 @@ namespace Notification.API
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddTransient<IMailService, BLL.Services.MailService>();
             services.AddControllers();
+            services.AddEndpointsApiExplorer();    
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,9 +42,11 @@ namespace Notification.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseSwagger();
-                //app.UseSwaggerUI();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
+
+            
 
             app.UseHttpsRedirection();
 
@@ -54,6 +58,8 @@ namespace Notification.API
             {
                 endpoints.MapControllers();
             });
+
+            
         }
     }
 }
