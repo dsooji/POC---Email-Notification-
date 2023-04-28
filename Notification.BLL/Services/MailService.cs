@@ -45,7 +45,7 @@ namespace Notification.BLL.Services
             using var smtp = new SmtpClient();
             smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
             smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
-            await smtp.SendAsync(email);
+            var res = await smtp.SendAsync(email);
             smtp.Disconnect(true);
         }
 

@@ -12,18 +12,18 @@ namespace Notification.API.Controllers
     [ApiController]
     public class MailController : ControllerBase
     {
-        private readonly IMailService mailService;
+        private readonly IMailService _mailService;
 
         public MailController(IMailService mailService)
         {
-            this.mailService = mailService;
+            this._mailService = mailService;
         }
         [HttpPost("send")]
-        public async Task<IActionResult> SendMail([FromBody] MailRequest request)
+        public async Task<IActionResult> SendMail(MailRequest request)
         {
             try
             {
-                await mailService.SendEmailAsync(request);
+                await _mailService.SendEmailAsync(request);
                 return Ok();
             }
             catch (Exception ex)
@@ -34,11 +34,11 @@ namespace Notification.API.Controllers
 
         }
         [HttpPost("welcome")]
-        public async Task<IActionResult> SendWelcomeMail([FromForm] WelcomeRequest request)
+        public async Task<IActionResult> SendWelcomeMail([FromBody] WelcomeRequest request)
         {
             try
             {
-                await mailService.SendWelcomeEmailAsync(request);
+                await _mailService.SendWelcomeEmailAsync(request);
                 return Ok();
             }
             catch (Exception ex)
