@@ -1,4 +1,4 @@
-﻿using Notification.BLL.Models;
+﻿using Notification.Entities.Models;
 using Notification.BLL.Settings;
 using MimeKit;
 using MailKit.Net.Smtp;
@@ -7,21 +7,24 @@ using MailKit;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
+using Notification.DAL;
 
 namespace Notification.BLL.Services
 {
     public class MailService : IMailService
     {
+        private IEmailRepository _emailRepository;  
         private readonly MailSettings _mailSettings;
-        public MailService(IOptions<MailSettings> mailSettings)
+        public MailService(IOptions<MailSettings> mailSettings,IEmailRepository emailRepository)
         {
             _mailSettings = mailSettings.Value;
+            _emailRepository = emailRepository;
         }
         public async Task SendEmailAsync(MailRequest mailRequest)
         {
             var email = new MimeMessage();
             email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
-            email.To.Add(MailboxAddress.Parse(mailRequest.ToEmail));
+            email.To.Add(MailboxAddress.Parse(mailRequest.To));
             email.Subject = mailRequest.Subject;
             var builder = new BodyBuilder();
             //if (mailRequest.Attachments != null)
@@ -45,6 +48,7 @@ namespace Notification.BLL.Services
             using var smtp = new SmtpClient();
             smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
             smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
+            await _emailRepository.SaveEmail(mailRequest);
             var res = await smtp.SendAsync(email);
             smtp.Disconnect(true);
         }

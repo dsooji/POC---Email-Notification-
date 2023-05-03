@@ -1,4 +1,4 @@
-﻿using Notification.BLL.Models;
+﻿using Notification.Entities.Models;
 using Notification.BLL.Settings;
 using System;
 using System.Collections.Generic;
@@ -13,8 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Notification.BLL.Services;
-
-
+using Notification.DAL;
 
 namespace Notification.API
 {
@@ -34,6 +33,7 @@ namespace Notification.API
             services.AddControllers();
             services.AddEndpointsApiExplorer();    
             services.AddSwaggerGen();
+            services.AddScoped<IEmailRepository, EmailRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

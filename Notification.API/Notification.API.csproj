@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="MailKit" Version="4.0.0" />
+    <PackageReference Include="Microsoft.AspNet.SignalR" Version="2.4.3" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5" />
     <PackageReference Include="MimeKit" Version="4.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
@@ -19,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Notification.BLL\Notification.BLL.csproj" />
+    <ProjectReference Include="..\Notification.DAL\Notification.DAL.csproj" />
   </ItemGroup>
 
 </Project>

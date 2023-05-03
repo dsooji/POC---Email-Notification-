@@ -1,4 +1,4 @@
-﻿using Notification.BLL.Models;
+﻿using Notification.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

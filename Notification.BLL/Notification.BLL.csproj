@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="MailKit" Version="4.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
     <PackageReference Include="MimeKit" Version="4.0.0" />
@@ -15,6 +16,11 @@
 
   <ItemGroup>
     <Folder Include="Templates\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Notification.DAL\Notification.DAL.csproj" />
+    <ProjectReference Include="..\Notification.Entities\Notification.Entities.csproj" />
   </ItemGroup>
 
 </Project>

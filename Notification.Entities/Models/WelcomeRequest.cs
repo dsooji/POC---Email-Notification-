@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 
 
-namespace Notification.BLL.Models
+namespace Notification.Entities.Models
 {
      public class WelcomeRequest
     {

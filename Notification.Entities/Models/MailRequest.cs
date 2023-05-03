@@ -1,8 +1,10 @@
-﻿namespace Notification.BLL.Models
+﻿namespace Notification.Entities.Models
 {
     public class MailRequest
     {
-        public string ToEmail { get; set; }
+        public string To { get; set; }
+
+        public string From { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
 

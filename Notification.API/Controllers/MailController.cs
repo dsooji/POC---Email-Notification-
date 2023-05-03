@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Notification.BLL;
-using Notification.BLL.Models;
+using Notification.Entities.Models;
 using Notification.BLL.Services;
 
 

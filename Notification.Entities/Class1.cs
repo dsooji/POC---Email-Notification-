@@ -1,4 +1,4 @@
-﻿namespace Notification.BLL
+﻿namespace Notification.Entities
 {
     public class Class1
     {
