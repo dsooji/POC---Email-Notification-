@@ -6,5 +6,8 @@ namespace Notification.DAL
     {
         Task<bool> SaveEmail(MailRequest mailRequest);
 
+        Task<IEnumerable<MailRequest>> GetAllEmails(); 
+        //IEnumerable<MailRequest> GetAll();
+
     }
 }

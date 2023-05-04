@@ -8,14 +8,15 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Notification.DAL;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Notification.BLL.Services
 {
     public class MailService : IMailService
     {
-        private IEmailRepository _emailRepository;  
+        private IEmailRepository _emailRepository;
         private readonly MailSettings _mailSettings;
-        public MailService(IOptions<MailSettings> mailSettings,IEmailRepository emailRepository)
+        public MailService(IOptions<MailSettings> mailSettings, IEmailRepository emailRepository)
         {
             _mailSettings = mailSettings.Value;
             _emailRepository = emailRepository;
@@ -53,25 +54,35 @@ namespace Notification.BLL.Services
             smtp.Disconnect(true);
         }
 
-        public async Task SendWelcomeEmailAsync(WelcomeRequest request)
+       
+        public async Task<IEnumerable<MailRequest>> GetMail()
         {
-            string FilePath = Directory.GetCurrentDirectory() + "\\Templates\\WelcomeTemplate.html";
-            StreamReader str = new StreamReader(FilePath);
-            string MailText = str.ReadToEnd();
-            str.Close();
-            MailText = MailText.Replace("[username]", request.UserName).Replace("[email]", request.ToEmail);
-            var email = new MimeMessage();
-            email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
-            email.To.Add(MailboxAddress.Parse(request.ToEmail));
-            email.Subject = $"Welcome {request.UserName}";
-            var builder = new BodyBuilder();
-            builder.HtmlBody = MailText;
-            email.Body = builder.ToMessageBody();
-            using var smtp = new SmtpClient();
-            smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-            smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
-            await smtp.SendAsync(email);
-            smtp.Disconnect(true);
+            return await _emailRepository.GetAllEmails();
+            
+           
         }
+
+        //public async Task GetEmails()
+
+        //public async Task SendWelcomeEmailAsync(WelcomeRequest request)
+        //{
+        //    string FilePath = Directory.GetCurrentDirectory() + "\\Templates\\WelcomeTemplate.html";
+        //    StreamReader str = new StreamReader(FilePath);
+        //    string MailText = str.ReadToEnd();
+        //    str.Close();
+        //    MailText = MailText.Replace("[username]", request.UserName).Replace("[email]", request.ToEmail);
+        //    var email = new MimeMessage();
+        //    email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
+        //    email.To.Add(MailboxAddress.Parse(request.ToEmail));
+        //    email.Subject = $"Welcome {request.UserName}";
+        //    var builder = new BodyBuilder();
+        //    builder.HtmlBody = MailText;
+        //    email.Body = builder.ToMessageBody();
+        //    using var smtp = new SmtpClient();
+        //    smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
+        //    smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
+        //    await smtp.SendAsync(email);
+        //    smtp.Disconnect(true);
+        //}
     }
 }

@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Notification.BLL.Services;
 using Notification.DAL;
+using Microsoft.EntityFrameworkCore;
 
 namespace Notification.API
 {
@@ -34,6 +35,8 @@ namespace Notification.API
             services.AddEndpointsApiExplorer();    
             services.AddSwaggerGen();
             services.AddScoped<IEmailRepository, EmailRepository>();
+            services.AddDbContext<DataContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

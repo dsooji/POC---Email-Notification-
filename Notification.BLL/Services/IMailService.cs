@@ -1,4 +1,6 @@
-﻿using Notification.Entities.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Notification.DAL;
+using Notification.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,8 @@ namespace Notification.BLL.Services
     public interface IMailService
     {
         Task SendEmailAsync(MailRequest mailRequest);
-        Task SendWelcomeEmailAsync(WelcomeRequest request);
+        
+        Task<IEnumerable<MailRequest>> GetMail();
+        
     }
 }
