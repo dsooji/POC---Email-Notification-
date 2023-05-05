@@ -34,7 +34,8 @@ namespace Notification.DAL
             {
 
                 using var connection = new SqlConnection(_connectionString);
-                var sql = $"INSERT INTO Email VALUES ('{mailRequest.To}', '{mailRequest.From}', '{mailRequest.Subject}', '{mailRequest.Body}')";
+                mailRequest.SentTime = DateTime.Now;
+                var sql = $"INSERT INTO Email VALUES ('{mailRequest.To}', '{mailRequest.From}', '{mailRequest.Subject}', '{mailRequest.Body}', '{mailRequest.SentTime}' )";
                 await connection.ExecuteAsync(sql, mailRequest);
                 return true;
             }
